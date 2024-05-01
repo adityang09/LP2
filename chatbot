@@ -1,0 +1,28 @@
+'''
+
+                            Online Python Compiler.
+                Code, Compile, Run and Debug python program online.
+Write your code in this editor and press "Run" button to execute it.
+
+'''
+import random
+import re
+responses={"greeting":["Hello how are you","How may I assist you","Whats your problem sir/madam"],
+            "products":["What products do you want?","Which mobile would you like to service?"],
+            "farewell":["Thank you for choosing us","We are very grateful","Thank you see you soon"],
+            "default":["I cant understand.","Please elaborate to help us assist you"]}
+def respond(query):
+    if re.search(r"\b(?:hello|hi)\b",query):
+        return random.choice(responses["greeting"])
+    if re.search(r"\b(?:service|product)\b",query):
+        return random.choice(responses["products"])
+    if re.search(r"\b(?:bye|next)\b",query):
+        return random.choice(responses["farewell"])
+    else:
+        return random.choice(responses["default"])
+print("Welcome")
+while(1):
+   
+    str1=input("Enter your query")
+    botresponse=respond(str1);
+    print("bot"+botresponse)
