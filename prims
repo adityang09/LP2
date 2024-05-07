@@ -31,3 +31,40 @@ def prim_minimum_spanning_tree():
         no_edge += 1
     print("Total cost of the minimum spanning tree:", total_cost)
 prim_minimum_spanning_tree()
+
+
+###PRIMS ALGORITHM
+n=int(input("Enter total number of routers"))
+l=[[0 for i in range(n)] for j in range(n)]
+for i in range(n):
+    print(l[i])
+for i in range(0,n):
+    for j in range(i+1,n):
+        print(f"Enter for {i+1} and {j+1}")
+        l[i][j]=int(input("Value"))
+        l[j][i]=l[i][j]
+for i in range(n):
+    print(l[i])
+node=0
+cost=0
+selected=[False]*n
+selected[3]=True
+while(node<n-1):
+    min=9999
+    x=0
+    y=0
+    for i in range(n):
+        if(selected[i]):
+            for j in range(n):
+                if(not selected[j] and l[i][j]>0):
+                    if(min>l[i][j]):
+                        min=l[i][j]
+                        x=i
+                        y=j
+    cost+=min                    
+    print(str(x) + "-" + str(y) + ":" + str(l[x][y]))          
+    selected[y]=True                    
+    node=node+1
+print(cost)    
+                        
+                    
