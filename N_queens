@@ -43,3 +43,37 @@ def n_queens(board, row):
                                         # all the queens placed during exploration back to 0.    
 board = [[0 for i in range(n)] for j in range(n)]
 n_queens(board, 0)
+
+
+
+###PRIMS ALGORITHM
+n=int(input("Enter total number "))
+l=[[0 for i in range(n)] for j in range(n)]
+def display(l):
+    for i in range(n):
+        print(l[i])
+def safe(l,row,column):
+    for k in range(n):
+        if(l[k][column]==1):
+            return False
+    for k in range(1,n):
+        if all(0<=x<n for x in [row-k,column-k]):
+            if(l[row-k][column-k]==1):
+                return False
+    for k in range(1,n):
+        if all(0<=x<n for x in [row-k,column+k]):
+            if(l[row-k][column+k]==1):
+                return False            
+    
+    return True
+def nqueen(l,row):
+    if(row==n):
+        display(l)
+        print("\n")
+        return
+    for col in range(n):
+        if safe(l,row,col):
+            l[row][col]=1
+            nqueen(l,row+1)
+            l[row][col]=0
+nqueen(l,0)            
