@@ -1,0 +1,33 @@
+def prim_minimum_spanning_tree():
+    V = int(input("Enter the number of vertices: "))
+    G = [[0] * V for _ in range(V)]
+    print("Enter the upper triangular part of the adjacency matrix (enter 0 for no edge):")
+    for i in range(V):
+        for j in range(i + 1, V):
+            weight = int(input(f"Weight of edge between vertex {i} and {j}: "))
+            G[i][j] = weight
+            G[j][i] = weight  # Make the matrix symmetric
+    INF = float('inf')  # Using float('inf') for infinity
+    selected = [False] * V
+    selected[0] = True
+    no_edge = 0
+    total_cost = 0
+    print("Edge : Weight\n")
+    while no_edge < V - 1:
+        minimum = INF
+        x = 0
+        y = 0
+        for i in range(V):
+            if selected[i]:
+                for j in range(V):
+                    if not selected[j] and G[i][j] > 0:
+                        if minimum > G[i][j]:
+                            minimum = G[i][j]
+                            x = i
+                            y = j
+        print(str(x) + "-" + str(y) + ":" + str(G[x][y]))
+        total_cost += G[x][y]
+        selected[y] = True
+        no_edge += 1
+    print("Total cost of the minimum spanning tree:", total_cost)
+prim_minimum_spanning_tree()
