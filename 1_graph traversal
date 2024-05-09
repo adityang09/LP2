@@ -125,3 +125,85 @@ int main()
     
 	return 0;
 }
+
+--------------------------------------
+#include <iostream>
+#include <vector>
+#include <list>
+#include <map>
+using namespace std;
+
+class Graph {
+public:
+    map<int, bool> visited;
+    map<int, list<int>> adj;
+
+    Graph(int V) {
+        adj.clear();
+        visited.clear();
+        for (int i = 0; i < V; ++i)
+            visited[i] = false;
+    }
+
+    void addEdge(int v, int w) {
+        adj[v].push_back(w);
+    }
+
+    void DFS(int v) {
+        visited[v] = true;
+        cout << v << " ";
+
+        for (auto i = adj[v].begin(); i != adj[v].end(); ++i)
+            if (!visited[*i])
+                DFS(*i);
+    }
+
+    void BFS(int s) {
+        vector<bool> visited(V, false);
+        list<int> queue;
+
+        visited[s] = true;
+        queue.push_back(s);
+
+        while (!queue.empty()) {
+            s = queue.front();
+            cout << s << " ";
+            queue.pop_front();
+
+            for (auto adjacent : adj[s]) {
+                if (!visited[adjacent]) {
+                    visited[adjacent] = true;
+                    queue.push_back(adjacent);
+                }
+            }
+        }
+    }
+
+private:
+    int V;
+};
+
+int main() {
+    int V = 4; // Number of vertices
+
+    Graph g(V);
+
+    // Add edges for the graph
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 2);
+    g.addEdge(2, 0);
+    g.addEdge(2, 3);
+    g.addEdge(3, 3);
+
+    cout << "DFS Traversal (starting from vertex 2): ";
+    g.DFS(2);
+    cout << endl;
+
+    cout << "BFS Traversal (starting from vertex 2): ";
+    g.BFS(2);
+    cout << endl;
+
+    return 0;
+}
+
