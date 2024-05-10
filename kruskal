@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+# define n 100
+using namespace std;
+int parent[n],szn[n];
+void make(int b)
+{
+	parent[b]=b;
+	szn[b]=1;
+}
+int find(int a)
+{
+	if(parent[a]==a)
+		return parent[a];
+	return(parent[a]=find(parent[a]));	
+}
+void Union(int a,int b)
+{
+	a=find(a);
+	b=find(b);
+	if(a!=b)
+	{
+		if(szn[a]>szn[b])
+			swap(a,b);
+		parent[b]=a;
+		szn[a]+=szn[b];	
+	}
+}
+int main()
+{
+	int v,e,cost=0;
+	cout<<"Enter total vertices"<<endl;
+	cin>>v;
+	cout<<"Enter total edges"<<endl;
+	cin>>e;
+	vector<pair<int,pair<int,int>>>edges;
+	int edg1,edg2,wt;
+	for(int i=0;i<e;i++)
+	{
+		cout<<"enter edge and weight";
+		cin>>edg1>>edg2>>wt;
+		edges.push_back({wt,{edg1,edg2}});
+	}
+	sort(edges.begin(),edges.end());
+	for(int i=1;i<v;i++)
+		make(i);
+	for(auto edge:edges)
+	{
+		int wt=edge.first;
+		int v1=edge.second.first;
+		int v2=edge.second.second;
+		if(find(v1)==find(v2))
+			continue;
+		Union(v1,v2);
+		cout<<v1<<"----"<<v2<<"--"<<wt;
+		cost+=wt;	
+	}
+	cout<<"Total cost is"<<cost;	
+	
+}
